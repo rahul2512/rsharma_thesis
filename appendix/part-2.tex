@@ -1,0 +1,196 @@
+\chapter{MD libraries}\label[appendix]{app2}
+
+For MD simulations of DNA, RNA, and DNA:RNA hybrid (DRH), we have used a palindromic library (given in \cref{palinold}) introduced in ref.~\cite{patelithesis}.
+This library contains all 256 tetramers on the reading strand, and the palindromic nature of the library allowed us to check the convergence of MD time-series and enhance the statistics.
+All the sequences in the palindromic library have GC ends to minimize fraying. 
+Furthermore, we have imposed this palindromic property in the library of sequences with epigenetic modifications (\cref{epilib}). 
+However, it is impossible to design a palindromic library 
+for hybrid DNA-RNA (HDR). 
+So, we used the same library as given in \cref{palinold} as it provides comparable statistics for all the monomer, dimer, and trimer, as well as allows us a systematic comparison between DNA, RNA, and DRH at atomistic levels. 
+All the libraries discussed above have GC ends. 
+In order to obtain parameter set blocks for other end blocks, we have used the library described in \cref{endlib}. 
+For each non-GC end, we have four sequences of length 12-nt of the form XYUV-(hex)-GC where XY $\in$ \{15 non-GC ends\}, UV is randomly chosen YY, YR, RR, and RY steps (to provide a rich context for XY), hex is randomly chosen hexamer, and the other end is fixed to be GC (as both non-GC ends lead to very low acceptance of the MD time-series after HB filtering).
+
+\begin{table}
+\vspace{0.8cm}
+\begin{center}
+\begin{tabular}{ c  c }
+\hline
+Index & Sequence \\
+\hline
+%  \midrule
+ & \multicolumn{1}{c}{Training sequences}  \\
+\hline
+1 & \ttfamily GCTTAGTTCAAATTTGAACTAAGC \\
+2 & \ttfamily GCTCTCTGTATTAATACAGAGAGC \\
+3 & \ttfamily GCCCTTGGCGATATCGCCAAGGGC \\
+4 & \ttfamily GCTAAAGCCTTATAAGGCTTTAGC \\
+5 & \ttfamily GCGGTAGAAAACGTTTTCTACCGC \\
+6 & \ttfamily GCCAAGACATTGCAATGTCTTGGC \\
+7 & \ttfamily GCAGATGGTCAGCTGACCATCTGC \\
+8 & \ttfamily GCCTCACCGCTCGAGCGGTGAGGC \\
+9 & \ttfamily GCAGTGGAATCATGATTCCACTGC \\
+10 & \ttfamily GCTTTACTTCGTACGAAGTAAAGC \\
+11 & \ttfamily GCTACCTATGCTAGCATAGGTAGC \\
+12 & \ttfamily GCGCACTGGGGATCCCCAGTGCGC \\
+13 & \ttfamily GCTGAGGAGTCCGGACTCCTCAGC \\
+14 & \ttfamily GCTGCCGTCGGGCCCGACGGCAGC \\
+15 & \ttfamily GCGCACAACACGCGTGTTGTGCGC \\
+16 & \ttfamily GCCTAACCCTGCGCAGGGTTAGGC \\
+\hline
+ & \multicolumn{1}{c}{Test sequences}  \\
+\hline
+17 & \ttfamily GCATTACGCTCCGGAGCGTAATGC \\
+18 & \ttfamily GCAAAAAAAAAAAAAAGC \\
+19 & \ttfamily GCATATATATATATATGC \\
+20 & \ttfamily GCGGATTACGCAGGC \\
+21 & \ttfamily GCGGATTCCGCAGGC \\
+22 & \ttfamily GCGCGAAAATTTTCGAAAATTTTCGCGC \\
+23 & \ttfamily GCGCGTTTTAAAACGTTTTAAAACGCGC \\
+24 & \ttfamily GCGCGCGCGCGCGCGCGCGC \\
+25 & \ttfamily CGGCGCACGTGACCGCG \\
+26 & \ttfamily GCATCGCCACTGAAGTTGGTTATAACCAACTTCAGTGGCGATGC \\
+\hline
+\end{tabular}
+\end{center}
+\centering\caption{Palindromic library in standard A, T, C, and G alphabets. For DNA this library has been referred as \Lbdna. For RNA, we have used the same library except the T is replaced by U and referred as \Lbrna. For HDR, we have intentionally chosen the DNA strand as the reading strand and thus keeping the same library which is called \Lbdrh.}
+\label{palinold}
+\end{table}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c | c || c | c }
+\hline  
+Index & Sequence  \\
+\hline  
+& Training library & & Test library \\
+\hline  
+1 & \ttfamily GCTA\textcolor{red}{MN}TGTA\textcolor{red}{MNMN}TACA\textcolor{red}{MN}TAGC & 13 & \ttfamily GCTA\textcolor{red}{MG}TGTC\textcolor{red}{MNMN}GACA\textcolor{red}{CN}TAGC \\
+2 & \ttfamily GCAT\textcolor{red}{MN}ACGA\textcolor{red}{MNMN}TCGT\textcolor{red}{MN}ATGC & 14 & \ttfamily GCAT\textcolor{red}{MG}ACGT\textcolor{red}{MNMN}ACGT\textcolor{red}{CN}ATGC \\
+3 & \ttfamily GCGC\textcolor{red}{MN}GGAG\textcolor{red}{MNMN}CTCC\textcolor{red}{MN}GCGC & 15 & \ttfamily GCTG\textcolor{red}{MG}TTCG\textcolor{red}{MNMN}CGAA\textcolor{red}{CN}CAGC \\
+4 & \ttfamily GCTC\textcolor{red}{MN}CTAA\textcolor{red}{MNMN}TTAG\textcolor{red}{MN}GAGC & 16 & \ttfamily GCCT\textcolor{red}{MG}CGTT\textcolor{red}{MNMN}AACG\textcolor{red}{CN}AGGC \\
+5 & \ttfamily GCTG\textcolor{red}{MN}TTCC\textcolor{red}{MNMN}GGAA\textcolor{red}{MN}CAGC & 17 & \ttfamily GCCTGAGTA\textcolor{red}{MGMNCN}TACTCAGGC \\
+6 & \ttfamily GCCT\textcolor{red}{MN}CGTG\textcolor{red}{MNMN}CACG\textcolor{red}{MN}AGGC & 18 & \ttfamily GCGGATTA\textcolor{red}{MN}CAGGC \\
+7 & \ttfamily GCGC\textcolor{red}{MG}GGAT\textcolor{red}{MNMN}ATCC\textcolor{red}{CN}GCGC & 19 & \ttfamily GCGCGCG\textcolor{red}{MNMNMN}CGCGCGC \\
+8 & \ttfamily GCTC\textcolor{red}{MG}CTAC\textcolor{red}{MNMN}GTAG\textcolor{red}{CN}GAGC & 20 & \ttfamily GCGCGCG\textcolor{red}{MGMGMG}CGCGCGC \\
+9 & \ttfamily GCTA\textcolor{red}{MG}TGTC\textcolor{red}{CNMG}GACA\textcolor{red}{CN}TAGC & 21 & \ttfamily GCGCG\textcolor{red}{MN}CGCGCG\textcolor{red}{MG}CGCGC \\
+10 & \ttfamily GCAT\textcolor{red}{MG}ACGT\textcolor{red}{MGCN}ACGT\textcolor{red}{CN}ATGC & & \\
+11 & \ttfamily GCAG\textcolor{red}{MGMG}ATAATTAT\textcolor{red}{CNCN}CTGC & &  \\
+12 & \ttfamily GCCACAAGT\textcolor{red}{CNMNMG}ACTTGTGGC & & \\
+\hline
+\end{tabular}
+\end{center}
+\centering\caption{
+Methylated or Hydroxymethylated libraries. The first 12 sequences are in the training library, and the rest of the sequences are in the test library.
+The Methylated and Hydroxymethylated libraries have been referred to as \Lbm \ and \Lbh, respectively.
+}
+\label{epilib}
+\end{table}
+
+\begin{table}
+%\vspace{0.8cm}
+\begin{center}
+\begin{tabular}{ l | c | c | c| c | c }
+Index & Sequence & Index & Sequence & Index & Sequence \\
+  \midrule
+1   & \ttfamily{AAGACCACTTGC}& 21 & \ttfamily{TGAGGCCACCGC} & 41 & \ttfamily{GTAAGATTACGC} \\
+2   & \ttfamily{AAGTTTAGGGGC}& 22 & \ttfamily{TGATCAAGTAGC} & 42 & \ttfamily{GTGCGACGCTGC} \\
+3   & \ttfamily{AATGCGTATCGC}& 23 & \ttfamily{TGTGCCGAGAGC} & 43 & \ttfamily{GTCAGGATAAGC} \\
+4   & \ttfamily{AATCACTTAGGC}& 24 & \ttfamily{TGCTTGATTTGC} & 44 & \ttfamily{GTTTCTAATAGC} \\
+5   & \ttfamily{ATAGACCCAAGC}& 25 & \ttfamily{TCAATTCGACGC} & 45 & \ttfamily{CGGACTACTCGC} \\
+6   & \ttfamily{ATGTATCACAGC}& 26 & \ttfamily{TCACAGCCATGC} & 46 & \ttfamily{CGGTGCTGCTGC} \\
+7   & \ttfamily{ATCAGGATAGGC}& 27 & \ttfamily{TCTGTGCAAAGC} & 47 & \ttfamily{CGTGGTGGAGGC} \\
+8   & \ttfamily{ATTTCTAGTGGC}& 28 & \ttfamily{TCTTGCGTTGGC} & 48 & \ttfamily{CGTCCTATTGGC} \\
+9   & \ttfamily{AGAAACTCGTGC}& 29 & \ttfamily{TTGATACCGCGC} & 49 & \ttfamily{CCGGCCCGCCGC} \\
+10  & \ttfamily{AGATAACACTGC}& 30 & \ttfamily{TTATCATGCAGC} & 50 & \ttfamily{CCACCCCGTCGC} \\
+11  & \ttfamily{AGCGCTCGTCGC}& 31 & \ttfamily{TTTGAATTATGC} & 51 & \ttfamily{CCTAAGTCTAGC} \\
+12  & \ttfamily{AGCCATGAAAGC}& 32 & \ttfamily{TTCTGGTTACGC} & 52 & \ttfamily{CCTTGCCTACGC} \\
+13  & \ttfamily{ACGGACGAATGC}& 33 & \ttfamily{GGGGCTCTTCGC} & 53 & \ttfamily{CTAGAGCGTGGC} \\
+14  & \ttfamily{ACGTTCAGTGGC}& 34 & \ttfamily{GGGTCGGACCGC} & 54 & \ttfamily{CTGCAACCCAGC} \\
+15  & \ttfamily{ACCGCGGTGAGC}& 35 & \ttfamily{GGTATCGACGGC} & 55 & \ttfamily{CTCATCCAACGC} \\
+16  & \ttfamily{ACCCAAAGCTGC}& 36 & \ttfamily{GGCCTATTATGC} & 56 & \ttfamily{CTCTGAGGTGGC} \\
+17  & \ttfamily{TAGACACTGTGC}& 37 & \ttfamily{GAGAGATGTCGC} & 57 & \ttfamily{CAAAGTCGACGC} \\
+18  & \ttfamily{TAATCCTCGCGC}& 38 & \ttfamily{GAATTATTACGC} & 58 & \ttfamily{CAACCCATTCGC} \\
+19  & \ttfamily{TATAGTGAGCGC}& 39 & \ttfamily{GACAGATCACGC} & 59 & \ttfamily{CACGGAAAGCGC} \\
+20  & \ttfamily{TATCGGGAATGC}& 40 & \ttfamily{GACTATGGTAGC} & 60 & \ttfamily{CATTAACGCCGC} \\
+\hline
+\end{tabular}
+\end{center}
+\centering\caption{Library for end-block parameters (\Lbe)}
+\label{endlib}
+\end{table}
+
+\section{Total number of monomers, dimers, monomers in trimer contexts, and dimers in tetramer contexts containing at least one modified base in  monomers and dimers}
+We have only considered methylation and hydroxymethylation of \cpg steps in this work. 
+We have used the letter M for 5-methylated-Cytosine, and N for Guanine when the complementary Cytosine is methylated. 
+Similarly, the letters H and K are used for 5- hydroxymethylated-Cytosine and Guanine complementary to 5-hydroxymethylated-Cytosine, respectively. 
+This section discusses the total possible monomers, dimers, monomers in trimer contexts, and dimers in tetramer contexts containing at least one modified base in monomers and dimers by taking the example of methylated Cytosine.
+
+\begin{table}
+\small
+\begin{center}
+\begin{tabular}{  c | c | c }
+Nmers & cases & total possibilities \\
+\hline
+X & \ttfamily{M, N} & 2 \\
+\hline
+\multirow{5}{*}{WXY}& \ttfamily{AMN, TMN, GMN, CMN, NMN}& \multirow{5}{*}{20} \\
+                    & \ttfamily{AMG, TMG, GMG, CMG, NMG} &  \\
+                     & $------------------$  & \\
+                    & \ttfamily{MNA, MNT, MNG, MNC, MNM} &  \\ 
+                    & \ttfamily{CNA, CNT, CNG, CNC, CNM} & \\
+\hline
+\hline
+XY & \ttfamily{\textbf{MN}, \textbf{NM}, MG, CN, AM, TM, CM, GM, NA, NT, NC, NG} & 12 \\
+\hline
+\multirow{43}{*}{WXYZ}& \ttfamily{AMNA, \textbf{TMNA}, CMNA, GMNA, NMNA}  & \multirow{43}{*}{163} \\
+                     & \ttfamily{\textbf{AMNT}, TMNT, CMNT, GMNT, NMNT}   & \\       
+                     & \ttfamily{AMNC, TMNC, CMNC, \textbf{GMNC}, NMNC}   & \\       
+                     & \ttfamily{AMNG, TMNG, \textbf{CMNG}, GMNG, NMNG}   & \\       
+                     & \ttfamily{AMNM, TMNM, CMNM, GMNM, \textbf{NMNM}}   & \\       
+                     & $----------------------$  & \\
+                     & \ttfamily{\textbf{CNMG}, MNMG, CNMN, \textbf{MNMN} }   & \\
+                     & $----------------------$  & \\
+                     & \ttfamily{AMGA, TMGA, CMGA, GMGA, NMGA}   & \\
+                     & \ttfamily{AMGT, TMGT, CMGT, GMGT, NMGT}   & \\       
+                     & \ttfamily{AMGC, TMGC, CMGC, GMGC, NMGC}   & \\       
+                     & \ttfamily{AMGG, TMGG, CMGG, GMGG, NMGG}   & \\       
+                     & \ttfamily{AMGM, TMGM, CMGM, GMGM, NMGM}   & \\       
+                     & $----------------------$  & \\
+                     & \ttfamily{ACNA, TCNA, CCNA, GCNA, NCNA}   & \\
+                     & \ttfamily{ACNT, TCNT, CCNT, GCNT, NCNT}   & \\       
+                     & \ttfamily{ACNC, TCNC, CCNC, GCNC, NCNC}   & \\       
+                     & \ttfamily{ACNG, TCNG, CCNG, GCNG, NCNG}   & \\       
+                     & \ttfamily{ACNM, TCNM, CCNM, GCNM, NCNM}   & \\       
+                     & $----------------------$  & \\
+                     & \ttfamily{AAMN, TAMN, CAMN, GAMN, NAMN}   & \\
+                     & \ttfamily{AAMG, TAMG, CAMG, GAMG, NAMG}   & \\
+                     & $----------------------$  & \\
+                     & \ttfamily{ATMN, TTMN, CTMN, GTMN, NTMN}   & \\
+                     & \ttfamily{ATMG, TTMG, CTMG, GTMG, NTMG}   & \\
+                     & $----------------------$  & \\
+                     & \ttfamily{ACMN, TCMN, CCMN, GCMN, NCMN}   & \\
+                     & \ttfamily{ACMG, TCMG, CCMG, GCMG, NCMG}   & \\
+                     & $-------------------------$  & \\
+                     & \ttfamily{MGMN, AGMN, TGMN, CGMN, GGMN, NGMN}   & \\
+                     & \ttfamily{MGMG, AGMG, TGMG, CGMG, GGMG, NGMG}   & \\
+                     & $-------------------------$  & \\
+                     & \ttfamily{MNAM, MNAA, MNAT, MNAC, MNAG}   & \\
+                     & \ttfamily{CNAM, CNAA, CNAT, CNAC, CNAG}   & \\
+                     & $----------------------$  & \\
+                     & \ttfamily{MNTM, MNTA, MNTT, MNTC, MNTG}   & \\
+                     & \ttfamily{CNTM, CNTA, CNTT, CNTC, CNTG}   & \\
+                     & $-------------------------$  & \\
+                     & \ttfamily{MNCN, MNCM, MNCA, MNCT, MNCC, MNCG}   & \\
+                     & \ttfamily{CNCN, CNCM, CNCA, CNCT, CNCC, CNCG}   & \\
+                     & $-------------------------$  & \\
+                     & \ttfamily{MNGM, MNGA, MNGT, MNGC, MNGG}   & \\
+                     & \ttfamily{CNGM, CNGA, CNGT, CNGC, CNGG}   & \\
+\hline
+\end{tabular}
+\end{center}
+\centering\caption{Total number of monomers, dimers, monomers in trimer contexts, and dimers in tetramer contexts containing at least one modified base in monomers and dimers. Palindromes are highlighted in bold. Trimers and tetramers with the same central monomer and dimer, respectively, are separated by a dashed line.}
+\label{mdimers}
+\end{table}
+
+\clearpage

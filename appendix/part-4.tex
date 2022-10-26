@@ -1,0 +1,169 @@
+\chapter{An involution of $3\times 3$ block structure}\label[appendix]{app4}
+
+
+Let $P$ be an orthogonal matrix
+\begin{equation}
+P = \begin{bmatrix}
+0 & 0 & P_1\\
+0 & P_2 & 0\\
+P_1 & 0 & 0
+\end{bmatrix}
+\text{ where } P^2 = I, P^TP = I, P \in n \times n,  P_{i}^2 = I, P_i \in n_i \times n_i \text{ and } P_{i}^T = P_{i} \; \forall \; i = {1,2}
+\end{equation}
+and a symmetric matrix $K$ 
+\begin{equation}
+K =  
+\begin{bmatrix}
+A & B & E\\
+B^T & C & D\\
+E^T & D^T & F
+\end{bmatrix}
+\text{ such that } K^T=K
+\end{equation}
+which is also an involution symmetric matrix such that $K = PKP = P^TKP$. 
+Let's define another orthogonal matrix $Q$, 
+\begin{equation}
+Q = \frac{1}{\sqrt{2}} 
+\begin{bmatrix}
+I & 0 & I\\
+0 & \sqrt{2}I & 0\\
+-P_1 & 0 & P_1
+\end{bmatrix}
+\text{ such that } Q^TQ=I
+\end{equation}
+
+Now, if $P_2$ is diagonal matrix with $s$ elements -1 and rest of the $r$ elements +1 (as $\pm1$ are the only possibility as $P_2^2=I$ )
+then the involution symmetry of $K$ implies that the orthogonal transformation $Q^TKQ$ yields a $2\times2$ block structure, i.e.,
+\begin{equation}
+Q^TKQ = 
+\begin{bmatrix}
+H_1 & O \\
+O & H_2 
+\end{bmatrix}
+\text{ where } H_1 \in (n_1+s) \times (n_1+s)
+\text{ and } H_2 \in (n_1+r) \times (n_1+r)
+\end{equation}
+\begin{equation}
+PKP = 
+\begin{bmatrix}
+P_1FP_1 & P_1D^TP_2 & P_1E^TP_1\\
+P_2DP_1 & P_2CP_2 & P_2BP_1\\
+P_1EP_1 & P_1B^TP_2 & P_1AP_1
+\end{bmatrix}
+\end{equation}
+so the symmetry and involution symmetry iff 4 conditions (independent) satisfy
+\begin{itemize}
+    \item $A = P_1FP_1$
+  \item $P_1B= D^TP_2$
+  \item $EP_1 = P_1E^T=(EP_1)^T$
+  \item $P_2CP_2=C$
+\end{itemize}
+
+Now, 
+\mathleft
+\begin{equation}
+\begin{split}
+Q^TKQ  = & 
+\frac{1}{2}
+\begin{bmatrix}
+I & 0 & -P_1\\
+0 & \sqrt{2}I & 0\\
+I & 0 & P_1
+\end{bmatrix}
+\begin{bmatrix}
+A & B & E\\
+B^T & C & D\\
+E^T & D^T & F
+\end{bmatrix}
+\begin{bmatrix}
+I & 0 & I\\
+0 & \sqrt{2}I & 0\\
+-P_1 & 0 & P_1
+\end{bmatrix} \\
+ = & 
+ \frac{1}{2}
+\begin{bmatrix}
+I & 0 & -P_1\\
+0 & \sqrt{2}I & 0\\
+I & 0 & P_1
+\end{bmatrix}
+\begin{bmatrix}
+A-EP_1 & \sqrt{2}B & A+EP_1\\
+B^T -DP_1 & \sqrt{2}C & B^T+DP_1\\
+ E^T-FP_1 & \sqrt{2}D^T & E^T+FP_1
+\end{bmatrix}\\
+ = & 
+ \frac{1}{2}
+\begin{bmatrix}
+A+P_1FP_1-P_1E^T-EP_1 & \sqrt{2}[B-P_1D^T] & A-P_1FP_1+EP_1-P_1E^T\\
+\sqrt{2}[B^T -DP_1] & 2C & \sqrt{2}[B^T+DP_1]\\
+ A-P_1FP_1-P_1E^T-EP_1 & \sqrt{2}[B+P_1D^T] & A+P_1FP_1+EP_1+P_1E^T
+\end{bmatrix}\\
+= & \ \ \ 
+\begin{bmatrix}
+A-EP_1 & \frac{1}{\sqrt{2}}B[I-P_2] & O\\
+\frac{1}{\sqrt{2}}[I-P_2]B^T & C & \frac{1}{\sqrt{2}}[I+P_2]B^T)\\
+ O & \frac{1}{\sqrt{2}}B[I+P_2] & A+EP_1
+\end{bmatrix}\\
+ = & 
+ \frac{1}{2}
+\begin{bmatrix}
+H_1 & O \\
+O & H_2
+\end{bmatrix}\\
+\end{split}    
+\end{equation}
+\mathcenter
+\text{where }
+$H_1 :=$ \begin{bmatrix}
+A-EP_1 & \sqrt{2}B_1 \\
+\sqrt{2}B_1^T & C_{11}
+\end{bmatrix}
+ \text{ and }
+$H_2 := $ \begin{bmatrix}
+C_{22} & \sqrt{2}B_2 \\
+\sqrt{2}B_2^T & A+EP_1
+\end{bmatrix}.
+
+Lemma
+\begin{itemize}
+    \item Orthogonal similarity doesn't change eigenvalues and systems for $H_1$ and $H_2$ are decoupled, i.e.,  $\lambda(K) = \mu(H_1) \cup \gamma(H_2)$
+    \item If $(\mu_i,\begin{bmatrix}
+    \underbar{w}_i \\
+    \underbar{x}_i
+    \end{bmatrix})$ is eigenpair for $H_1$ then corresponding eigenpair for $K$ is $(\mu_i,Q \begin{bmatrix}
+    \underbar{w}_i \\
+    \underbar{x}_i\\
+    o 
+    \end{bmatrix} = \frac{1}{\sqrt{2}}
+    \begin{bmatrix}
+        \underbar{w}_i \\
+    \sqrt{2}\hat{\underbar{x}}_i \\
+    -P_1\underbar{w}_i
+    \end{bmatrix}
+    )$ where $\hat{\underbar{x}}_i = \begin{bmatrix}
+        \underbar{x}_i\\
+        0
+    \end{bmatrix}$
+    \item Similarly, if $(\gamma_j,\begin{bmatrix}
+    \underbar{y}_j \\
+    \underbar{z}_j
+    \end{bmatrix})$ is eigenpair for $H_2$ then corresponding eigenpair for $K$ is $(\gamma_j,Q \begin{bmatrix}
+    o \\
+    \underbar{y}_j \\
+    \underbar{z}_j
+    \end{bmatrix} = \frac{1}{\sqrt{2}}
+    \begin{bmatrix}
+        \underbar{z}_j \\
+    \sqrt{2}\hat{\underbar{y}}_j \\
+    +P_1\underbar{z}_j
+    \end{bmatrix}
+    ) 
+    $ where $\hat{\underbar{y}}_j = \begin{bmatrix}
+        0 \\
+        \underbar{y}_j
+        \end{bmatrix}$
+\end{itemize}
+
+It explains the sparsity pattern in eigenvectors of a palindromically symmetrized matrix.
+\clearpage

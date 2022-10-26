@@ -1,0 +1,132 @@
+\chapter{Conclusions and future work}\label{c8}
+
+\section{Summary and conclusions}
+
+In this work, we have extended the cgDNA$+$ model, which predicts a non-local sequence-dependent Gaussian pdf for any arbitrary DNA sequence, to the cgNA$+$ model by estimating parameter sets for a wider variety of double-stranded nucleic acids (dsNAs), including dsDNA with epigenetic base modifications, dsRNA, and DNA:RNA hybrid (DRH).
+Just as in its precursor cgDNA$+$ model, the cgNA$+$ model explicitly treats bases and phosphates as rigid bodies $\in SE(3)$ and uses helicoidal CURVES$+$ coordinates to parameterize the configuration of dsNAs.
+%\rs{However, cgNA$+$ model has much more extensive parameter sets trained of longer MD  length, sequence, alphabets, and ----. }
+For a sequence $\sq$ of length $N$ base-pairs, any configuration can be described using internal coordinates in $24N-18$ dimensions with $6N$ intra base-pair, $6(N-1)$ inter base-pair step, $6(N-1)$ Crick phosphate and $6(N-1)$ Watson phosphate coordinates.
+%Note that the first $5^\prime$-phosphates on both strands are not considered. 
+Thus, given a sequence $\sq$ and a parameter set $\mathcal{P_{\text{NA}}}$,
+%(i.e., different parameter sets for different NAs),
+the cgNA$+$ model predicts a Gaussian pdf in configuration space by reconstructing a ground-state $\hat{w} (\sq, \mathcal{P_{\text{NA}}}) \in \R^{24N-18}$,
+and a positive-definite stiffness matrix
+$\K (\sq, \mathcal{P_{\text{NA}}}) \in \R^{24N-18 \times 24N-18}$:
+\begin{equation}
+\rho(w; \sq, \mathcal{P_{\text{NA}}}) = \frac{1}{\textit{Z}} exp \{-\frac{1}{2}(w-\hat{w})\cdot \K (w-\hat{w})\}.
+\end{equation}
+The parameter set $\mathcal{P_{\text{NA}}}$ contains dinucleotide-step dependent stiffness blocks $\in \R^{42 \times 42}$ and stress vectors $\in \R^{42}$ for interior dinucleotide steps and stiffness blocks $\in \R^{36 \times 36}$ and stress vectors $\in \R^{36}$ for terminal dinucleotide steps.
+From these dinucleotide-step dependent parameters, oligomer level stiffness matrix $\K(\sq)$ and stress vector $\sigma(\sq)$ are constructed by overlaying the blocks with $18 \times 18$ overlap in $\K(\sq)$ and $18 \times 1$ overlap in $\sigma(\sq)$.
+Notably, the parameter set is dinucleotide-step dependent; thus, both the stiffness matrix $\K(\sq)$ and stress vector $\sigma(\sq)$ have local sequence-dependence, but the groundstate $\hat{w}(\sq)$ constructed as,
+\begin{equation}
+\hat{w}(\sq) = \K^{-1}(\sq)\sigma(\sq),
+\end{equation}
+and so has a non-local (often strongly non-local) sequence dependence due to the inversion of the banded stiffness matrix $\K$. 
+It reflects the physical phenomenon of frustration that originates because each base-pair level (complementary bases along with their $5^\prime$-phosphates) participates in two base-pair level junctions which can not simultaneously minimize their energy.
+This phenomenon of frustration energy and, thus, non-local sequence dependence is only possible in rigid base models or higher hierarchy models such as cgDNA$+$ and cgNA$+$ (details in \cref{c2}).
+
+\clearpage
+
+The cgNA$+$ model is trained on atomistic molecular dynamics (MD) simulations of a comprehensive set of diverse sequences (sixteen 24mers for each dsDNA, dsRNA, and DRH) using state-of-the-art MD simulation protocols.
+In \cref{c3}, we have discussed the training sequences whose palindromic nature (for dsDNA and dsRNA) allows quantifying the convergence error in the MD time-series.
+By defining a \textit{scale} (which quantifies variation over sequence) as the average pair-wise distance/divergence between pdfs for all training sequences for a given dsNA, we have demonstrated that 10 $\mu$s of MD time-series for each sequence is sufficient with convergence error almost two orders smaller than \textit{scale}.
+Moreover, we found that the distributions of internal coordinates for dsDNA are often non-Gaussian, particularly for phosphates and some inter base-pair coordinates.
+In contrast, for dsRNA, the corresponding distributions of internal coordinates are close to Gaussian.
+Most interestingly, DRH behavior is between dsDNA and dsRNA, with the DNA strand similar to pure dsDNA and the RNA strand similar to pure dsRNA.
+Notably, the cgNA$+$ model assumes that the internal coordinates follow a Gaussian behavior, i.e., the cgNA$+$ model energy is quadratic. 
+Lastly, we have shown that the corresponding Gaussian approximation error is negligible, with a few exceptions in the phosphate coordinates.
+
+In \cref{c4}, we have introduced the cgNA$+$ parameter sets and illustrated that the model predictions are almost indistinguishable from the corresponding MD statistics (first and second moments) by assessing the model for diverse test sequences, including sequences with exceptional mechanical behavior (e.g., A-tracts) and showing that the model accurately captures changes in groundstate due to change in the hexamer context or beyond (highly non-local change).
+We have quantified the error due to various modeling assumptions and showed that the largest error in the model originates from the sequence locality assumption (dinucleotide dependence) in the parameter set; however, the model is highly accurate with a prediction/reconstruction error one order smaller than \textit{scale} (which quantifies variation over sequence).
+Furthermore, we have presented a systematic and rigorous comparison of various observables, including average shape, persistence length, and groove widths for dsDNA, dsRNA, and DRH. 
+It is worth highlighting that some of these observables, such as average shape and groove widths, can be obtained using MD simulations but only for few short sequences, while it is almost infeasible to estimate persistence length even for a single sequence (of length greater than 100 bps) using atomistic MD simulations.
+
+Firstly at length scales at which a few MD simulations can be performed, we confirmed that the model predictions are extremely close to the corresponding observations in MD simulations and agree well with the findings in prior literature. For instance, the average shape for various dimers in dsDNA and dsRNA are considerably different; Twist and Slide in dsDNA are higher than in dsRNA, whereas the trend is opposite for Roll. 
+Moreover, the phosphate coordinates are dramatically different for the two dsNAs.
+The difference, in general, can be interpreted with the A-form and B-form geometry adopted by dsRNA and dsDNA, respectively.
+Notably, DRH adopts a mixed geometry (slightly closer to A-form) with base coordinates slightly closer to pure dsRNA and phosphate coordinates on the DNA strand closer to pure dsDNA and on the RNA strand closer to pure dsRNA.
+For persistence length, the general trends computed for approximately two million random sequences (of length 220 bps) are in order $\ell_{p}^{\text{RNA}} \gtrapprox \ell_{p}^{\text{DNA}}  \gtrapprox \ell_{p}^{\text{DRH}}$  and $\ell_{d}^{\text{RNA}} \gtrapprox \ell_{d}^{\text{DRH}} \gtrapprox \ell_{d}^{\text{DNA}}$, where $\ell_{p}$ and $\ell_{d}$ are apparent and dynamic (obtained by factoring out shape contributions from $\ell_{p}$) persistence length. 
+It is worth noting that both dsDNA and dsRNA exhibit a wide range of persistence lengths over sequence space, which is further complicated for DRH with much larger variation, for instance, $\ell_{d}$ is approximately 312 bps for poly(A) while 196 bps for poly(T).
+In general, the trends for persistence lengths agree fairly well with the limited experimental observations, except that the predictions of the cgNA$+$ model are larger.
+It should be noted that the tangent-tangent correlations obtained from the cgNA$+$ Monte Carlo code and MD simulations for shorter sequences (24mers) are incredibly close; thus, the discrepancy in persistence lengths between model predictions and the experimental consensus is not inherent to the cgNA$+$ model and might be due to the MD protocol, which differs strongly from the experimental setups.
+Regardless, this work provided a detailed insight into the persistence length spectrum of various dsNAs in the sequence space, and notably, such computation for even a single sequence of length greater than 200 bps is almost unfeasible using MD simulations.
+
+Moreover, we found that groove widths, which play a significant role in indirect readout and other protein-DNA interactions, are highly sensitive to the sequence and showed that A/T rich sequences tend to have very narrow minor grooves (with the exception that the TA step is never present), whereas C/G rich sequences have minor groove widths almost twice as compared to A/T rich sequences.
+The major groove (wider than the minor groove) for dsDNA does not exhibit strong sequence preferences for extreme widths.
+In contrast, the minor groove is wider than the major groove in dsRNA and comparable to the major groove for DRH.
+Similar to dsDNA, extreme groove widths are also adopted by specific sequences in dsRNA and DRH as well.
+Lastly, we demonstrated that single nucleotide polymorphisms (SNPs) have a strongly non-local impact on the groundstate of dsDNA which depends on the kind of mutation as well as the flanking contexts. 
+We revealed that the impact on groundstate due to various SNPs is in the order A$\longleftrightarrow$G $<$ C$\longleftrightarrow$G $<$ A$\longleftrightarrow$C $<$ A$\longleftrightarrow$T and all of these SNPs are highly sensitive to flanking contexts.
+Notably, these statistics are obtained over millions of sequences in only a few hours on a standard laptop.
+Thus, in this chapter, we have illustrated the efficiency and potential of the cgNA$+$ model to explore the sequence-dependent structural and mechanical properties of various dsNAs.
+
+The next chapter systematically compared the predictions of the cgNA$+$ model with the available protein-DNA X-ray crystal structure data for dimers in all flanking tetramer contexts.
+First, we have shown that the flanking tetramer context strongly influences the average shape of a given dimer in the X-ray data set and thus can not be ignored.
+Moreover, using hierarchical clustering, we have demonstrated that the trends in the sequence space for the dimer's average shape are similar in the two data sets.
+In a direct comparison, we found a reasonable agreement between the average shape and a close alignment in the direction of variation of the average shape over the sequence space.
+Furthermore, the directions of dsDNA deformations in configuration space are very close in the two data sets, with an excellent correlation between the non-local sequence-dependent configurational volume (a measure of DNA deformability).
+Lastly and most interestingly, we found a striking alignment between the direction of variation of groundstate in sequence space and the direction of dsDNA deformation in configuration space, implying that the dimer adopts minimum energy configurations for various sequences/flanking contexts by compromising more in the soft modes of configuration space.
+
+In \cref{c6}, we have extended the cgNA$+$ model to include alphabets for epigenetically modified bases, in particular, for 5-methylated or 5-hydroxymethylated cytosine in \cpg steps, by training parameters for additional dinucleotide steps (to standard dsDNA) using MD statistics obtained from a palindromic library containing twelve 24mers.
+We have demonstrated that the model accuracy is similar to that obtained in predicting a Gaussian pdf for the standard dsDNA sequence. 
+The model can capture the non-local change in groundstate due to epigenetic base modifications (arguably a smaller change than a point mutation).
+The change in groundstate as a result of either methylation or hydroxymethylation is similar and highly sensitive to the flanking sequence contexts. 
+Moreover, a rigorous analysis of change in groundstate upon methylation or hydroxymethylated revealed that the minimum change in groundstate is when the C to be modified is preceded by A and the maximum change is when \cpg step is present in the C/G context. 
+This implies that the \cpg modifications are likely to have a much larger influence on the groundstate in \cpg islands.
+Furthermore, we found that increasing base modifications lead to a widening of the minor groove and depend on the modification position.
+Lastly, contrary to general belief, we found that apparent persistence lengths decrease upon symmetric modification of \cpg steps, whereas dynamic persistence remains almost the same.
+However, asymmetric modifications of the \cpg steps lead to an increase in persistence length. 
+Also, in general, the influence of both types of modification (methylation or hydroxymethylation) on persistence length is similar.
+
+In the final chapter of the thesis, we have introduced a neural network module to predict the atomistic position of the sugar atoms from the knowledge of adjacent phosphate and base atoms. 
+The module is trained on the same MD simulation data used for training the cgNA$+$ model.
+It allows fine-graining any cgNA$+$ coarse-grained configuration or generating an ensemble of atomistic configurations for any sequence comparable to MD simulations but in a very short time.
+In particular, we have shown that this module can generate an ensemble of $10^5$ configurations for a 24mer within an hour with statistics comparable to 10 $\mu$s of MD simulations which take approximately two months on a highly efficient GPU.
+It enables an accurate analysis of sequence-dependent sugar-pucker modes and backbone configuration for any sequence in negligible time.
+Furthermore, a fine-grain sequence-dependent equilibrium structure can be used to start MD simulations, particularly useful for dsDNA mini-circles.
+
+Thus, with the overarching goal of widening the impact and applicability of the cgDNA$+$ model, we have extended it to the cgNA$+$ model, which allows predicting a non-local sequence-dependent Gaussian pdf for any dsDNA (with epigenetic base modifications), dsRNA, or DRH sequence and an additional machine learning tool has been developed to predict the positions of sugar atoms in any cgNA$+$ configuration. 
+Moreover, we have demonstrated that the error in the model prediction for mechanically diverse test sequences is negligible, and for dsDNA, we have also shown that the model predictions are in reasonable agreement with the available protein-DNA X-ray structure data for both the average shape and stiffness.
+Lastly, we have illustrated the model efficiency by exploring applications such as persistence length, groove widths, the impact of SNPs and the role of flanking contexts, and the impact of base-modifications and the role of flanking contexts for millions of sequences, which is otherwise unfeasible.
+
+\clearpage
+
+\section{Future work} 
+There are many possible further extensions of the cgNA$+$ model that could be of practical interest. For example, 
+
+\begin{enumerate}
+
+\item  In terms of implementation, the current machine learning module to predict the location of sugar atoms is only developed for dsDNA and will be particularly useful to extend it for dsDNA with epigenetically modified bases which have a significant impact on the backbone conformation and sugar puckering modes~\cite{banyay2002structural,liebl2019methyl}.
+Similarly, it could also be extended for dsRNA and DRH for completeness.
+
+\item In this work, we have only compared model prediction with the available protein-DNA X-ray data in base coordinates, and it would be interesting to extend the comparison for phosphate coordinates which are currently ignored in this work due to the scarcity of the experimental data and multi-modal behavior of phosphate coordinates. 
+Similarly, there are not enough experimental data for dsRNA, DRH, or epigenetically modified dsDNA to make such a comparison. 
+
+\item One particular direction in which the cgNA$+$ parameter sets should be extended is to allow both methylated and hydroxymethylated \cpg steps in the same sequence (currently allowed but not adjacent to each other) that are frequent in biology.
+It will require computing additional parameters for dimer steps such as NH and KM, which is relatively simple, but ensuring a positive-definite reconstruction of stiffness matrix for any sequence is a challenging task and is in progress.
+Furthermore, parameters for other base modifications can also be added for further generalisability of the cgNA$+$ model. 
+In particular, methylation or hydroxymethylation of \gpc steps is relatively rare but has a potential role in regulating mitochondrial gene expression.
+However, note that any such extension leads to considerable expansion of the parameter set, which requires comprehensive MD simulation data to train those parameters, and lastly, considerable effort to ensure that the predicted stiffness for any sequence will be positive-definite.
+Moreover, the extension of the model parameter sets for other rare base modifications such as 5-formyl-C, 5-carboxyl-C, and N6-carboxymethyl-A is also limited by the availability of reliable MD forcefields.
+
+\item Another interesting extension of the cgNA$+$ model is to include parameters for DNA mismatches (when two non-complementary bases align in the same base-pair, e.g., A aligns with C or A or G).
+Such mismatches are frequent in biology and can occur during DNA replication and due to ionizing radiation, mutagenic chemicals, or spontaneous deamination.
+The inclusion of parameters for DNA mismatches would help better understand how DNA mismatches influence the local mechanics of the DNA and provide insights into DNA mismatch repair.
+
+
+%%% combining hydroxymethylated steps 
+%%% comparing phosphate 
+%% mismatches
+
+\item  Another avenues for future research lie in the development of tools for various applications of the model. 
+For instance, T. Zwahlen, in his thesis, developed cgDNA$+$loc to scan the whole genome, and thus, identified exceptional sequences in various genomes.
+Similar efforts are required in several other directions (some of them are ongoing in the LCVMM or collaboration) at the time of thesis writing.
+One particular ongoing project is the easy implementation of the method that predicts sequence-dependent equilibria for dsDNA (or for any dsNAs) mini-circles of various lengths using the groundstate predicted by the cgNA$+$ model.
+Another interesting problem is to compute the energy required for a linear dsDNA fragment to wrap around the nucleosome core particle and to understand the role of sequence in dsDNA wrapping energy and the changes induced by the epigenetic modifications (which are often related to gene silencing).
+Moreover, the deformation of dsNAs on the application of external loads such as pulling and twisting is another exciting application actively pursued in the LCVMM group.
+Other potential applications include modeling protein-DNA interactions. 
+
+\item Lastly, to further expand the impact of the cgNA$+$ model, one of the ongoing projects includes the incorporation of sequence-dependent mechanics of dsDNA (using cgNA$+$) in the oxDNA model~\cite{ouldridge2011structural,oxdna2} which is a successful model for studying the mechanical~\cite{myoxDNA} and thermodynamic properties~\cite{ouldridge2011structural} of large DNA nanostructures.
+This will allow fine-tuning of DNA nanostructures or origamis, which have potential applications in molecular machine and drug delivery, catalysis, and biophysics.
+
+\end{enumerate}

@@ -1,0 +1,23 @@
+\addcontentsline{toc}{section}{\bf ABSTRACT}
+{\centerline {{\textbf{ABSTRACT}}}}
+\vspace{0.75cm}
+
+DNA mechanics plays a crucial role in many biological processes, including nucleosome positioning and protein-DNA interactions. It is believed that nature employs epigenetic modifications in DNA to further regulate gene expression. Moreover, double-stranded RNA and DNA:RNA hybrid (DRH) are also important in biology, and their mechanics play a significant role. It is now well established that the mechanics of double-stranded nucleic acid (dsNA) is a function of its sequence. In particular, the sequence-dependent mechanics of DNA is often considered as the \say{secondary genetic code} owing to its quintessential role in DNA readout. However, a comprehensive understanding of sequence-dependent mechanics of dsNAs is still lacking, primarily due to enormous sequence space, which is unexplorable using either experiment or atomistic molecular dynamics (MD) simulation, and, thus, requires an accurate and efficient alternative.
+
+This thesis extends the cgDNA$+$ model, a sequence-dependent coarse-grained model of dsDNA, to cgNA$+$ by estimating parameters for various dsNAs, including dsRNA, DRH, and dsDNA with epigenetic base modifications. The model is trained on atomistic MD simulations generated with state-of-the-art MD protocols. For an arbitrary sequence, the model efficiently predicts sequence-dependent equilibrium distributions, treating bases and phosphates as rigid bodies. The model is thoroughly assessed for mechanically diverse test sequences and various modeling choices are explained and justified by quantifying the associated error.
+
+Moreover, as exhibited in the protein-DNA X-ray structure data, flanking contexts are essential for dimer mechanics. We compared X-ray observation with model predictions for dimers in all tetramer contexts and found a reasonable agreement for average shape, stiffness, direction of variation of groundstate in sequence space, and direction of dsDNA deformation in configuration space. Remarkably, we also found an excellent alignment between the direction of variation of groundstate in sequence space and the direction of dsDNA deformation in configuration space, implying that, for various sequences/flanking contexts, dimer adopts groundstate by compromising more in the soft modes of configuration space.
+
+The cgNA$+$ model efficiency enables the study of interesting properties of dsNAs, such as average shape, persistence length, backbone conformations, and groove widths for millions of sequences, thereby, drawing statistical conclusions over sequence space. It allows addressing questions including (a) which single nucleotide polymorphisms influence dsDNA mechanics the least/most and its sensitivity to flanking sequence, (b) the role of sequence in narrowing/widening of grooves, and (c) the role of flanking sequence in epigenetic modifications. Other applications include scanning genomes for mechanically exceptional sequences, understanding sequence-dependent nucleosome (un)wrapping, predicting protein binding affinity, and studying dsNA response to external load.
+
+Lastly, we develop a deep learning tool to predict the location of sugar atoms in any cgNA$+$ coarse-grained configuration. It allows generating an ensemble of atomistic configurations for any sequence comparable to MD simulations but with little computational effort and studying backbone and sugar conformations. Furthermore, a fine-grain sequence-dependent equilibrium structure can be used to start MD simulations, particularly useful for dsDNA mini-circles.
+
+\vskip 0.5cm
+\noindent
+\textbf{Keywords:} {\it Coarse-graining}, {\it MD simulations}, {\it DNA mechanics}, {\it RNA}, {\it DNA:RNA hybrid}, {\it Epigenetics}, {\it Neural network}, {\it Sugar puckering}, {\it Groove widths}, {\it Persistence length}.
+
+
+%, {\it B\rom{1}-B\rom{2} DNA backbone conformations}.
+%The findings indicate that the change in groundstate of DNA on epigenetic modifications is significantly larger when \cpg step is present in the \cpg islands.
+
+%%gene regulation and genome formation of many viruses, and their structure and flexibility are pivotal in their functioning.

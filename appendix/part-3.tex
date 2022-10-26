@@ -1,0 +1,136 @@
+\chapter{Mathematical detail}\label[appendix]{app3}
+
+
+\section{Rotations in three-dimensions, $SO(3)$ group} \label{a3:s1}
+The special orthogonal matrix group, $SO(3)$ represents all proper rotations in three-dimensional Euclidean space, i.e., $\in \R^3$ and is defined as:
+\begin{equation}
+SO(3) = \{ R \in \R^{3\times3} \;|\; R^{T}R = RR^{T} = I \in \R^{3\times3},\; \det{R}=+1 \}
+\label{a3:eq1}    
+\end{equation}
+ where $I$ is an identity matrix. 
+$R$ is a proper right-handed rotation matrix with 
+\{$1,e^{\iota\theta},e^{-\iota\theta}$\} as eigenvalues, where $\theta$ is 
+the angle of rotation, and the real eigenvector of $R$ is the axis of 
+rotation $u$. 
+    
+Furthermore, for a given rotation matrix, $R$, the Euler-Rodrigues formula gives the following relation between the rotation matrix $R$ and a unit axis of rotation $u$ and angle of rotation $\theta$: 
+\begin{equation}
+SO(3) \ni R = \cos{\theta}I + (1-\cos{\theta})u\otimes{u} + \sin{\theta}u^{\times}
+\label{a3:eq2}    
+\end{equation}
+where $I \in \R^{3\times3}$ is an identity matrix, $u\otimes{u} = uu^{T}$ is outer-product and $u^{\times}$ is a skew-symmetric matrix satisfying $(u^{\times})v = u\times{v}\; \forall \; v \in \R^3$ and of the form:
+\begin{equation}
+u^{\times} = \begin{bmatrix}
+    0 & -u_{3} & u_2 \\
+    u_3 & 0  & -u_1 \\
+    -u_2 & u_1 & 0 \\
+   \end{bmatrix}
+\label{a3:eq3}    
+\end{equation}
+
+A skew-symmetric matrix $u^{\times}$ can be transformed to its corresponding as $u=\text{vec}(u^{\times})$. 
+
+Using Euler-Rodrigues formula in \Cref{a3:eq2}, a direct relation between $R$ and  $u$, $\theta$ is given as:
+\begin{equation}
+[0,\pi) \ni \theta = \arccos\left( \frac{tr(R)-1}{2}\right) \;\; \text{and} \;\; \R^{3} \ni u = \frac{2}{1+tr(R)} \text{vec}(R-R^{T})
+\label{a3:eq4}    
+\end{equation}
+Note that, for $\theta = 0 \; \text{and}\; \pi$, the rotation matrix become symmetric which means $R-R^T$ will be a zero-matrix and thus, can't be used for the computation of rotation axis, $u$. In the case of $\theta=0$, $Q$ becomes an identity matrix, and any unit vector can be the rotation axis. However, when $\theta=\pi$, the axis of rotation will be the eigenvector of matrix $Q+I$.  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parameterisation of rotations in cgDNA$+$ model}\label{a3:s2}
+Now, to parameterise rotations in cgDNA$+$ model,
+we have used Cayley parameters (details in ~\cite{lankavs2009parameterization,patelithesis,petthesis}). We have defined the function $cay: \R^3 \xrightarrow{} SO(3)$ as: 
+
+\begin{equation}
+cay_{\alpha}(\eta) = I + \frac{1}{4\alpha^{2}+|\eta|^{2}} \left[  4\alpha \eta^{\times} + 2(\eta^{\times})^2 \right] = R(u,\theta) \; \forall \; \alpha \in \R, \eta \in \R^{3}
+\label{a3:eq5}    
+\end{equation}
+
+where $\R^3 \ni u=\frac{\eta}{|\eta|}$ and $\theta=2\arctan{\left(\frac{|\eta|}{2\alpha}\right)}$. 
+The inverse of $cay$ transformation can be defined as $cay^{-1}$: $SO(3) \xrightarrow{} \R^3$ and is given in \Cref{a3:eq6}.
+
+\begin{equation}
+cay_{\alpha}^{-1}(R) = \frac{2\alpha}{1+tr(R)} \text{vec}(R-R^{T})
+\label{a3:eq6}    
+\end{equation}
+
+\section{Rigid body transformation, $SE(3)$ group} \label{a3:s3}
+To describe the position and orientation of rigid body, we have used 
+special euclidean group, $SE(3)$ which is defined as: 
+\begin{equation}
+SE(3) = \Big\{  \R^{4\times4} \ni G =  
+\begin{bmatrix}
+    R & r  \\
+    0 & 1   \\
+   \end{bmatrix} \Big\}
+\label{a3:eq7}    
+\end{equation}
+where $R \in SO(3)$ is the rotational component and $ r \in \R^3$ is the translational component of the rigid body transformation. 
+
+The product of $G_1 \in SE(3)$ and $G_2 \in SE(3)$ is given as 
+\begin{equation}
+ SE(3) \ni G_1G_2 =  
+\begin{bmatrix}
+    R_1R_2 & R_1r_2 +r_1 \\
+    0 & 1   \\
+   \end{bmatrix}
+\label{a3:eq8}    
+\end{equation}
+and the inverse of an element in $SE(3)$ is, 
+\begin{equation}
+ SE(3) \ni G^{-1} =  
+\begin{bmatrix}
+    R^T & -R^Tr \\
+    0 & 1   \\
+   \end{bmatrix}
+\label{a3:eq9}    
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kullback-Leibler divergence} \label{a3:s4}
+The Kullback-Leibler (KL) divergence~\cite{kld}, also known as relative entropy, between two continuous 
+pdfs $\rho_1(x) \; \text{and} \; \rho_2(x)$ defined on $\Omega \subset \R^N$ is given as: 
+\begin{equation}
+D_{KL}(\rho_1(x),\rho_2(x)) = \int_{\Omega}\rho_1(x)\log\frac{\rho_1(x)}{\rho_2(x)}dx \geq 0  
+\label{a3:eq11}    
+\end{equation}
+where the equality holds if $\rho_1=\rho_2$. 
+
+Some of the key properties of KL divergence are: 
+\begin{itemize}
+    \item KL divergence is non-symmetric, i.e., $D_{KL}(\rho_1,\rho_2) \ne D_{KL}(\rho_2,\rho_1)$, in general. 
+\item KL divergence doesn't satisfy triangle inequality and doesn't qualify as a metric. It just defines a premetric on the set of pdfs. 
+\item Invariant under re-scaling i.e say $X_1,X_2$ are random 
+variables associated to pdfs $\rho_1, \rho_2$ and $X'_1,X'_2$ are random 
+variables associated to pdfs $\rho'_1, \rho'_2$ where $\{X_i = aX'_i\}_{i=1,2}$, then $D_{KL}(\rho_1,\rho_2)=D_{KL}(\rho'_1,\rho'_2)$.
+This invariance of KL divergence under re-scaling allowed an easier 
+re-scaling of rotational coordinates in cgDNA family of models and change of reading strand. 
+\item In case, when the pdfs $\rho_1, \rho_2$ are normal multivariate distributions, \cref{a3:eq11} simplifies to an algebraic form, 
+\begin{equation}
+\begin{split}
+D_{KL}(\rho_1,\rho_2)  &=\S(\rho_1,\rho_2) + \M(\rho_1,\rho_2) \\
+\S(\rho_1,\rho_2) &= \frac{1}{2}\left[ K_1^{-1}:K_2
+-\ln\left(\frac{|K_2|}{|K_1|}\right)-I:I\right] \\  
+\M(\rho_1,\rho_2)&= \frac{1}{2} (\mu_1-\mu_2)^T K_2(\mu_1-\mu_2)
+ \end{split}
+\label{a3:eq12}  
+\end{equation}
+where $\mu_1$ and $\mu_2$ are mean vectors, $K_1$ and $K_2$ are inverse
+covariance matrices, and $:$ represents the standard Euclidean inner product 
+for square-matrices and $I$ is the identity matrix of the size same as $K_1$ and $K_2$. $\sqrt{\M}$ is also known as Mahalanobis distance~\cite{mahal}.  
+\end{itemize}
+
+Moreover, KL divergence can be symmetrised as follows:
+\begin{equation}
+\begin{split}
+D_{KLS}(\rho_1,\rho_2) &= \frac{1}{2}[D_{KL}(\rho_1,\rho_2) + D_{KL}(\rho_2,\rho_1)]\\
+ & =  \S_{S}(\rho_1,\rho_2) + \M_{S}(\rho_1,\rho_2),\\
+\S_{S}(\rho_1,\rho_2) & =  \frac{1}{2}\left[ K_1^{-1}:K_2 + K_2^{-1}:K_1 -2I:I\right],\\
+\M_{S}(\rho_1,\rho_2)&=  \frac{1}{2} \left[(\mu_1-\mu_2)^T (K_2+K_1) (\mu_1-\mu_2)\right],
+\end{split}
+\label{a3:eq13}
+\end{equation}
+where $\S_{S}(\rho_1,\rho_2)$ is symmetrised stiffness contribution,
+and $\M_{S}(\rho_1,\rho_2)$ is symmetrised shape contribution of the symmetrised KL divergence. 
+
+\clearpage
